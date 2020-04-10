@@ -41,6 +41,7 @@ current_Ethereum_Price = float(eth_Price.get('result').get('XETHZEUR').get('a')[
 total_Crypto_Balance = portfolio_EUR + (portfolio_Ethereum * current_Ethereum_Price)
 
 pprint.pprint(total_Crypto_Balance)
+pprint.pprint(current_Ethereum_Price)
 
 # TODO
 # Use API to get current value of S&P500 ETF
