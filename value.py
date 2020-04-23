@@ -1,5 +1,4 @@
 import krakenex
-import pprint
 import json
 
 # JSON API key and secret values imported from a seperate file and turned into a dictionary
@@ -39,9 +38,10 @@ current_Ethereum_Price = float(eth_Price.get('result').get('XETHZEUR').get('a')[
 
 # calculates the current balance of Eth + Eur
 total_Crypto_Balance = portfolio_EUR + (portfolio_Ethereum * current_Ethereum_Price)
+formatted_balance = "{:.2f}".format(total_Crypto_Balance)
 
-pprint.pprint(total_Crypto_Balance)
-pprint.pprint(current_Ethereum_Price)
+print("Portfolio balance: €" + formatted_balance)
+print("Current ETH price: €" + str(current_Ethereum_Price))
 
 # TODO
 # Use API to get current value of S&P500 ETF
