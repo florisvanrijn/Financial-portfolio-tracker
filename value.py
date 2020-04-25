@@ -1,9 +1,30 @@
 import krakenex
 import json
+import sys
+
+data = {}
+
+def keyWizard():
+    global data
+    data['krakenAPIKey'] = input("Please enter your API key: ")
+    data['krakenAPISecret'] = input("Please enter your secret key: ")
+    with open('secrets.json', 'w') as f:
+        json.dump(data, f)
 
 # JSON API key and secret values imported from a seperate file and turned into a dictionary
-with open('secrets.json') as f:
-    data = json.load(f)
+try:
+    with open('secrets.json') as f:
+        data = json.load(f)
+except FileNotFoundError:
+    confirmMessage = input("Secrets file not found. Would you like to start the secrets file creation wizard? (y/n) ")
+    while confirmMessage != "y" and confirmMessage != "n":
+        confirmMessage = input()
+
+    if confirmMessage == "y":
+        keyWizard()
+    elif confirmMessage == "n":
+        print("Goodbye!")
+        sys.exit()
 
 # values of krakenAPIKey and krakenAPISecret taken from the dictionary and stored in variables:
 krakenAPIKey = data["krakenAPIKey"]
@@ -13,7 +34,14 @@ krakenAPISecret = data["krakenAPISecret"]
 k = krakenex.API(key= krakenAPIKey, secret= krakenAPISecret)
 
 # balance returns a dictionary of values for all currencies held in portfolio
-balance = k.query_private('Balance')['result']
+try:
+    balance = k.query_private('Balance')['result']
+except KeyError:
+    print("There was a problem with your access keys.")
+    sys.exit()
+except:
+    print("Failed to receive response from Kraken. Please check your connection.")
+    sys.exit()
 
 # portfolio_EUR stores the value of the EUR amount currently in Balance
 portfolio_EUR = float(balance.get('ZEUR'))
