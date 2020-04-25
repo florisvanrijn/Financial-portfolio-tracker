@@ -41,7 +41,7 @@ except KeyError:
     print("There was a problem with your access keys.")
     sys.exit()
 except:
-    print("Failed to recieve response from Kraken. Please check your connection.")
+    print("Failed to receive response from Kraken. Please check your connection.")
     sys.exit()
 
 # portfolio_EUR stores the value of the EUR amount currently in Balance
