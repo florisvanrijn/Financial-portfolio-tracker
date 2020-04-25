@@ -2,14 +2,32 @@ import krakenex
 import pprint
 import json
 import sys
+data = {}
+
+
+def keyWizard():
+    global data
+    data['krakenAPIKey'] = input("Please enter your API key: ")
+    data['krakenAPISecret'] = input("Please enter your secret key: ")
+    with open('secrets.json', 'w') as f:
+        json.dump(data, f)
+
 
 # JSON API key and secret values imported from a seperate file and turned into a dictionary
 try:
     with open('secrets.json') as f:
         data = json.load(f)
 except FileNotFoundError:
-    print("Secrets file not found!")
-    sys.exit()
+    confirmMessage = input("Secrets file not found. Would you like to start the secrets file creation wizard? (y/n) ")
+    while confirmMessage != "y" and confirmMessage != "n":
+        confirmMessage = input()
+
+    if confirmMessage == "y":
+        print("Okay let's do it")
+        keyWizard()
+    elif confirmMessage == "n":
+        print("Never mind then")
+        sys.exit()
 
 # values of krakenAPIKey and krakenAPISecret taken from the dictionary and stored in variables:
 krakenAPIKey = data["krakenAPIKey"]
