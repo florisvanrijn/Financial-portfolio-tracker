@@ -23,10 +23,9 @@ except FileNotFoundError:
         confirmMessage = input()
 
     if confirmMessage == "y":
-        print("Okay let's do it")
         keyWizard()
     elif confirmMessage == "n":
-        print("Never mind then")
+        print("Goodbye!")
         sys.exit()
 
 # values of krakenAPIKey and krakenAPISecret taken from the dictionary and stored in variables:
