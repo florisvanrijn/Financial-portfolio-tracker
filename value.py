@@ -1,20 +1,33 @@
 import krakenex
 import pprint
 import json
+import sys
 
 # JSON API key and secret values imported from a seperate file and turned into a dictionary
-with open('secrets.json') as f:
-    data = json.load(f)
+try:
+    with open('secrets.json') as f:
+        data = json.load(f)
+except FileNotFoundError:
+    print("Secrets file not found!")
+    sys.exit()
 
 # values of krakenAPIKey and krakenAPISecret taken from the dictionary and stored in variables:
 krakenAPIKey = data["krakenAPIKey"]
 krakenAPISecret = data["krakenAPISecret"]
 
 # Holds the API key and secret key for Kraken account. Read only API key, less security danger
+
 k = krakenex.API(key= krakenAPIKey, secret= krakenAPISecret)
 
 # balance returns a dictionary of values for all currencies held in portfolio
-balance = k.query_private('Balance')['result']
+try:
+    balance = k.query_private('Balance')['result']
+except KeyError:
+    print("There was a problem with your access keys.")
+    sys.exit()
+except:
+    print("Failed to recieve response from Kraken. Please check your connection.")
+    sys.exit()
 
 # portfolio_EUR stores the value of the EUR amount currently in Balance
 portfolio_EUR = float(balance.get('ZEUR'))
