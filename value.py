@@ -2,8 +2,8 @@ import krakenex
 import pprint
 import json
 import sys
-data = {}
 
+data = {}
 
 def keyWizard():
     global data
@@ -11,7 +11,6 @@ def keyWizard():
     data['krakenAPISecret'] = input("Please enter your secret key: ")
     with open('secrets.json', 'w') as f:
         json.dump(data, f)
-
 
 # JSON API key and secret values imported from a seperate file and turned into a dictionary
 try:
@@ -33,7 +32,6 @@ krakenAPIKey = data["krakenAPIKey"]
 krakenAPISecret = data["krakenAPISecret"]
 
 # Holds the API key and secret key for Kraken account. Read only API key, less security danger
-
 k = krakenex.API(key= krakenAPIKey, secret= krakenAPISecret)
 
 # balance returns a dictionary of values for all currencies held in portfolio
